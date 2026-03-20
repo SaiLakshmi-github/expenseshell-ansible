@@ -1,0 +1,16 @@
+- name: setup backend
+  hosts: backend
+  become: true
+  tasks:
+  - name: disable nodejs module
+    ansible.builtin.command: dnf module disable nodejs -y
+
+  - name: enable nodejs module
+    ansible.builtin.command:  dnf module enable nodejs:20 -y
+
+  - name: install nodejs
+    ansible.builtin.dnf: 
+      name: "{{ item}}"
+    loop:
+      - nodejs
+      - mysql
